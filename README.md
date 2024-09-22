@@ -7,3 +7,5 @@ L'atelier propose une brève introduction aux expressions régulières. Il compo
 ### Utilisation
 
 Le fichier principal est "Presentation_regex.qmd". Il peut être ouvert dans un environnement Posit (RStudio) ou dans un autre environnement de développement intégré (VSCode, etc.). Le plus simple est d'importer et d'ouvrir le projet dans Posit Cloud en insérant l'URL du répertoire Github dans la zone d'importation de projets.
+
+![](images/PositCloud.jpg)
