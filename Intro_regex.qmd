@@ -55,6 +55,7 @@ if (file.exists("donnees/maria.RDS")) {
   maria <- readRDS("donnees/maria.RDS")
 } else {
   maria <- gutenberg_download(13525, mirror = "http://mirror.csclub.uwaterloo.ca/gutenberg/")
+  dir.create("donnees")
   saveRDS(maria, "donnees/maria.RDS")
 }
 
