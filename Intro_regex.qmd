@@ -337,7 +337,7 @@ Taulli, Tom. *Regex with ChatGPT*. \[First edition\]. \[Sebastopol, California\]
 Yarberry, William. *CRAN Recipes : DPLYR, Stringr, Lubridate, and RegEx in R*. Berkeley, CA: Apress, 2021. <https://doi.org/10.1007/978-1-4842-6876-6.>
 
 
-# Modules R:
+# Modules R
 Johnston, Myfanwy, et David Robinson. gutenbergr: Download and Process Public Domain Works from Project Gutenberg. 0.2.4, 12 novembre 2023. R-Packages, https://cloud.r-project.org/web/packages/gutenbergr/index.html.
 
 Wickham, Hadley, et al. stringr: Simple, Consistent Wrappers for Common String Operations. 1.5.1, 14 novembre 2023. R-Packages, https://cran.r-project.org/web/packages/stringr/index.html.
