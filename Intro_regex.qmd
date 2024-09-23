@@ -324,6 +324,13 @@ str_replace_all(phrase_a_corriger, pattern = "\\b[eé]gli\\w+", replacement = "�
 
 ```
 
+# Conclusion
+Cette rapide introduction aux expressions régulières donne une faible idée de leur intérêt dans l'exploration et la manipulation des textes. Nul besoin d'être un·e expert·e en programmation pour y recourir: une connaissance des principes et des opérateurs de base suffit pour commencer à fabriquer ses premières expressions. Celles-ci pourront être rapidement mises à l'épreuve dans des éditeurs interactifs en ligne.
+
+La principale force des expressions régulières est de pouvoir se modeler de manière très précise aux besoins des chercheuses et chercheurs. Elles ont certes leurs limites et ne peuvent par exemple saisir, dans un texte, que les chaînes de caractères auxquels leur concepteur ou conceptrice aura tout d'abord pensé. Elles supposent donc, de leur part, une très bonne connaissance préalable des textes qui font l'objet d'une fouille et des chaînes de caractères à saisir. Pour envisager tous les cas de figure, on privilégiera le travail en équipe. L'IA générative pourra également être utile pour soutenir, sans la remplacer, la créativité des chercheur·euse·s.
+
+
+
 # Bibliographie
 
 Jockers, Matthew L. *Text Analysis with R for Students of Literature*. Quantitative Methods in the Humanities and Social Sciences. Springer International Publishing, 2014. <https://doi.org/10.1007/978-3-319-03164-4>.
