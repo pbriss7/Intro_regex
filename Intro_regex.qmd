@@ -3,11 +3,22 @@ lang: fr
 title: "Introduction aux expressions régulières"
 author: "Pascal Brissette"
 date: "2024-09-20"
-format: html
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    toc-location: left
+    theme: Journal
+    self-contained: true
+    reference-location: margin
+    title-block-banner: true
 editor: visual
 ---
 
 ```{r activation des modules}
+#| output: false
+#| echo: false
+#| comment: false
 
 inst_ext_fun <- function(extension) {
   if(!extension %in% rownames(installed.packages())) {
@@ -28,9 +39,9 @@ rm(list = ls())
 
 # Le couteau suisse des chercheur·euse·s en sciences humaines
 
-Dans le bagage des chercheuses et chercheurs en sciences humaines et sociales, habitué·e·s à travailler avec des textes, les expressions régulières constituent un couteau suisse d'une grande utilité qui permettra de trouver, d'extraire, de filtrer ou de remplacer des mots ou expressions variées dans un ou plusieurs textes. L'atelier va permettre de se familiariser avec cet outil. Nous allons l'utiliser dans un environnement de programmation, mais vous pouvez également tirer profit de cet outil dans des logiciels de traitement de texte.
+Dans le bagage des chercheuses et chercheurs en sciences humaines et sociales, habitué·e·s à travailler avec des textes, les expressions régulières constituent un couteau suisse d'une grande utilité qui permettra de trouver, d'extraire, de filtrer ou de remplacer des mots ou expressions variées dans un ou plusieurs textes. L'atelier va permettre de se familiariser avec cet outil.
 
-![Site regex101.com](images/regex101.jpg)
+Si vous faites l'atelier dans un environnement de programmation comme RStudio ((Posit ou [Posit Cloud](https://posit.cloud/)), vous pourrez exécuter les lignes de code et observer le résultat. Si vous consultez la version "html" du document, le code aura au préalable été exécuté et vous pourrez observer le résultat.
 
 # Origine et utilité des expressions régulières
 
@@ -40,23 +51,22 @@ Dans les études littéraires, les expressions régulières peuvent servir à ex
 
 # Exemple de prétraitement avec expressions régulières
 
-Dans l'exemple ci-dessous, on importe le roman *Maria Chapdelaine*, de Louis Hémon, du site Projet Gutenberg. Vous pouvez exécuter les lignes de code l'une après l'autre, et observer le résultat. Les expressions régulières sont utilisées à trois reprises, une première fois pour repérer les débuts de chapitres, une deuxième fois pour segmenter les chaînes de caractéres (tokenisation), une troisième fois pour compter les occurrences des noms des prétendants de Maria dans chacun des chapitres.
+Dans l'exemple ci-dessous, nous allons voir à quoi pourrait ressembler le prétraitement d'un texte littéraire à l'aide d'expressions régulires. Les principales étapes du traitement sont les suivantes:
+
+1. Importation dans l'environnement de travail du roman *Maria Chapdelaine*, de Louis Hémon. Le texte importé provient du site [Projet Gutenberg](https://www.gutenberg.org/ebooks/13525).
+2. Élimination du péritexte (Notes du Projet Gutenberg, titre du roman, nom de l'auteur, etc.);
+3. Traitement préalable aux calculs statistiques (élimination de la ponctuation et des symboles, transformation de toutes les majuscules en minuscules);
+4. Transposition du texte brut et traité dans un tableau de données (dataframe) où chaque ligne correspond à un chapitre et chaque colonne, à une variable (numéro du chapitre, mots du chapitre, nombre total de mots)
+5. Création de trois nouvelles colonnes portant chacune le nom d'un prétendant, et indication du nombre de fois que chaque prétendant est nommé dans chacun des chapitres.
+
+En exécutant ou en parcourant le code, essayez de voir où sont utilisés des motifs (expressions régulières).
+
 
 ```{r exemple de prétraitement}
-#| output: false
+#| output: true
 
-# Importation sous forme de tableau de données du texte de Maria Chapdelaine avec son identifiant unique. Si le fichier existe déjà dans le dossier "données", il sera simplement chargé dans l'environnement.
-
-if(!dir.exists("donnees")) {
-  dir.create("donnees")
-}
-if (file.exists("donnees/maria.RDS")) {
-  maria <- readRDS("donnees/maria.RDS")
-} else {
-  maria <- gutenberg_download(13525, mirror = "http://mirror.csclub.uwaterloo.ca/gutenberg/")
-  saveRDS(maria, "donnees/maria.RDS")
-}
-
+# Importation du texte du roman
+maria <- gutenberg_download(13525, mirror = "http://mirror.csclub.uwaterloo.ca/gutenberg/")
 
 # Transformation de l'encodage des chaînes de caractères du vecteur `text`
 maria$text <- iconv(maria$text, from = "latin1", "utf8")
@@ -87,11 +97,11 @@ tokenisation_fun <-
   return(mots_v)                        # Renvoi explicite de l'objet vecteur
 }
 
-# Création d'une liste vide dans laquelle on emmagasinera les mots de chacun des chapitres
+# Création d'une liste vide pour, ensuite, emmagasiner les mots de chacun des chapitres
 mots_chapitres_l <-
   vector(mode = "list", length = length(debut_chapitres_v))
 
-# On remplit notre objet liste avec les mots de chacun des chapitre (à l'aide d'une structure de contrôle appelée "boucle for")
+# On remplit notre objet liste avec les mots de chacun des chapitre
 for (i in seq_along(debut_chapitres_v)) {
   mots_chapitres_l[[i]] <- tokenisation_fun(
     texte = maria$text,
@@ -134,7 +144,7 @@ mots_chapitres_df$texte <-
   sapply(mots_chapitres_df$mots, paste, collapse = " ")
 
 
-# On crée trois colonnes, une pour chacun des prénoms des prétendants de Maria. La valeur correspond au nombre d'occurrences de chaque prénom dans chaque chapitre. La fonction utilisée, `str_count()`, est prise à l'extension stringr.
+# On crée trois colonnes, une pour chacun des prénoms des prétendants de Maria, et nous allons indiquer dans ces colonnes le nombre de fois que chaque prétendant est nommé:
 
 mots_chapitres_df$francois <-
   str_count(mots_chapitres_df$texte, pattern = "fran[cç]ois")
@@ -145,8 +155,8 @@ mots_chapitres_df$lorenzo <-
 mots_chapitres_df$eutrope <-
   str_count(mots_chapitres_df$texte, pattern = "eutrope")
 
-# On peut visualiser la structure de données
-mots_chapitres_df
+# On peut visualiser la structure de données (sans le texte complet, pour éviter la surcharge)
+mots_chapitres_df[, c("chapitre", "longueur_chap", "francois", "lorenzo", "eutrope")]
 
 ```
 
