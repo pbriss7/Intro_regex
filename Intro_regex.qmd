@@ -53,14 +53,13 @@ Dans les études littéraires, les expressions régulières peuvent servir à ex
 
 Dans l'exemple ci-dessous, nous allons voir à quoi pourrait ressembler le prétraitement d'un texte littéraire à l'aide d'expressions régulires. Les principales étapes du traitement sont les suivantes:
 
-1. Importation dans l'environnement de travail du roman *Maria Chapdelaine*, de Louis Hémon. Le texte importé provient du site [Projet Gutenberg](https://www.gutenberg.org/ebooks/13525).
-2. Élimination du péritexte (Notes du Projet Gutenberg, titre du roman, nom de l'auteur, etc.);
-3. Traitement préalable aux calculs statistiques (élimination de la ponctuation et des symboles, transformation de toutes les majuscules en minuscules);
-4. Transposition du texte brut et traité dans un tableau de données (dataframe) où chaque ligne correspond à un chapitre et chaque colonne, à une variable (numéro du chapitre, mots du chapitre, nombre total de mots)
-5. Création de trois nouvelles colonnes portant chacune le nom d'un prétendant, et indication du nombre de fois que chaque prétendant est nommé dans chacun des chapitres.
+1.  Importation dans l'environnement de travail du roman *Maria Chapdelaine*, de Louis Hémon. Le texte importé provient du site [Projet Gutenberg](https://www.gutenberg.org/ebooks/13525).
+2.  Élimination du péritexte (Notes du Projet Gutenberg, titre du roman, nom de l'auteur, etc.);
+3.  Traitement préalable aux calculs statistiques (élimination de la ponctuation et des symboles, transformation de toutes les majuscules en minuscules);
+4.  Transposition du texte brut et traité dans un tableau de données (dataframe) où chaque ligne correspond à un chapitre et chaque colonne, à une variable (numéro du chapitre, mots du chapitre, nombre total de mots)
+5.  Création de trois nouvelles colonnes portant chacune le nom d'un prétendant, et indication du nombre de fois que chaque prétendant est nommé dans chacun des chapitres.
 
 En exécutant ou en parcourant le code, essayez de voir où sont utilisés des motifs (expressions régulières).
-
 
 ```{r exemple de prétraitement}
 #| output: true
@@ -183,7 +182,7 @@ Voici quelques-uns des symboles et opérateurs les plus communs:
 |            |                                                                                                                               |                                                                                                                                                                                                                                                                                                                                                       |
 | `1, 2, 3`  |                                                                                                                               | "1", "2", "3"                                                                                                                                                                                                                                                                                                                                         |
 +------------+-------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| `\\b`      | Balise de mot                                                                                                                 | L'expression `jour` attrapera aussi bien le mot "jour" que "au**jour**d'hui", tandis que `\\bjour\\b`\` n'attrapera que le mot "jour" au singulier, tout en minuscules.                                                                                                                                                                               |
+| `\\b`      | Balise de mot                                                                                                                 | L'expression `jour` attrapera aussi bien le mot "jour" que "au**jour**d'hui", tandis que `\\bjour\\b` n'attrapera que le mot "jour" au singulier, tout en minuscules.                                                                                                                                                                                 |
 +------------+-------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | `\\w`      | N'importe quel caractère d'un mot                                                                                             | `\\w` saisira une seule lettre, minuscule ou majuscule, d'une suite de lettres encadrées de blancs typographiques ou de ponctuations. Par exemple, `str_extract("Victor Hugo", "\\w")`, renverra seulement la première lettre du premier mot, "V".                                                                                                    |
 +------------+-------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -191,7 +190,7 @@ Voici quelques-uns des symboles et opérateurs les plus communs:
 +------------+-------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | `.`        | N'importe quel caractère (lettre, chiffre, ponctuation, espace simple), une seule fois.                                       | `\\bMontr.al\\b` saisirait le mot "Montréal", "Montreal", mais également "Montrial", "Montr'al", "Montr al", etc. Très pratique pour attraper dans un texte des mots dont on soupçonne qu'ils pourraient avoir été orthographiés de différentes manières.                                                                                             |
 +------------+-------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| `\\.`      | Un point, tout simplement. Les deux barres transversales inversées annulent la fonction spéciale accordée autrement au point. | La fonction ``` str_replace_all``("Je mange une pomme","\\.", "!") ``` renverra "Je mange une pomme!", mais ``` str_replace_all(``"Je mange une pomme",``".", "!") ``` renverra "!!!!!!!!!!!!!!!!!!!"                                                                                                                                                 |
+| `\\.`      | Un point, tout simplement. Les deux barres transversales inversées annulent la fonction spéciale accordée autrement au point. | La fonction `str_replace_all("Je mange une pomme","\\.", "!")` renverra "Je mange une pomme!", mais `str_replace_all("Je mange une pomme",".", "!")` renverra "!!!!!!!!!!!!!!!!!!!"                                                                                                                                                                   |
 +------------+-------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | `?`        | Cet opérateur est un quantifieur "paresseux" (*lazy quantifier*).                                                             | Opérateur très utile pour indiquer que, dans une expression, une lettre ou un symbole est facultatif, que l'on veut attraper un mot, peu importe qu'une certaine lettre soit ou non présente. Par exemple `\\bMontréalaise?\\b` saisira aussi bien "Montréalais" que "Montréalaise". Le caractère `?` rend facultatif le "e" qui précède l'opérateur. |
 +------------+-------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -334,11 +333,10 @@ str_replace_all(phrase_a_corriger, pattern = "\\b[eé]gli\\w+", replacement = "�
 ```
 
 # Conclusion
+
 Cette rapide introduction aux expressions régulières donne une faible idée de leur intérêt dans l'exploration et la manipulation des textes. Nul besoin d'être un·e expert·e en programmation pour y recourir: une connaissance des principes et des opérateurs de base suffit pour commencer à fabriquer ses premières expressions. Celles-ci pourront être rapidement mises à l'épreuve dans des éditeurs interactifs en ligne.
 
 La principale force des expressions régulières est de pouvoir se modeler de manière très précise aux besoins des chercheuses et chercheurs. Elles ont certes leurs limites et ne peuvent par exemple saisir, dans un texte, que les chaînes de caractères auxquels leur concepteur ou conceptrice aura tout d'abord pensé. Elles supposent donc, de leur part, une très bonne connaissance préalable des textes qui font l'objet d'une fouille et des chaînes de caractères à saisir. Pour envisager tous les cas de figure, on privilégiera le travail en équipe. L'IA générative pourra également être utile pour soutenir, sans la remplacer, la créativité des chercheur·euse·s.
-
-
 
 # Bibliographie
 
@@ -352,12 +350,8 @@ Taulli, Tom. *Regex with ChatGPT*. \[First edition\]. \[Sebastopol, California\]
 
 Yarberry, William. *CRAN Recipes : DPLYR, Stringr, Lubridate, and RegEx in R*. Berkeley, CA: Apress, 2021. <https://doi.org/10.1007/978-1-4842-6876-6.>
 
-
 # Modules R
+
 Johnston, Myfanwy, et David Robinson. gutenbergr: Download and Process Public Domain Works from Project Gutenberg. 0.2.4, 12 novembre 2023. R-Packages, https://cloud.r-project.org/web/packages/gutenbergr/index.html.
 
 Wickham, Hadley, et al. stringr: Simple, Consistent Wrappers for Common String Operations. 1.5.1, 14 novembre 2023. R-Packages, https://cran.r-project.org/web/packages/stringr/index.html.
-
-
-
-

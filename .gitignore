@@ -5,3 +5,5 @@ donnees/**
 gitignore
 .Rproj.user/**
 .Rproj.user
+.RData
+.Rhistory
